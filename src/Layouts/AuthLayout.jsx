@@ -1,11 +1,9 @@
 import { Outlet } from "react-router";
 import { NavLink } from "react-router-dom";
-import { FaUserAstronaut } from "react-icons/fa";
 
 export const AuthLayout = () => {
 	return (
 		<div className="auth-form">
-			
 			<Outlet />
 			<hr />
 			<div className="grid">

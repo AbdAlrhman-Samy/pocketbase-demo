@@ -17,6 +17,41 @@
     font-size: 5em;
 }
 
+.grid--home {
+    height: 70vh;
+    margin: 3em auto;
+    text-align: center;
+    gap: 3em;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.user-header {
+    margin: 3em auto;
+    text-align: center;
+}
+
+.user-header img {
+    height: 8em;
+    width: auto;
+    display: block;
+    margin: auto;
+    border-radius: 1em;
+}
+
+.watchlist__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    gap: 1em;
+}
+
+.watchlist__grid div {
+    width: 100%;
+    height: max-content;
+    background-size: cover;
+}
+
 .theme-switcher{
     position: fixed;
     bottom: 2em;
@@ -36,6 +71,7 @@
 .auth-btn{
     margin-top: auto;
 }
+
 
 @media(min-width: 992px){
     .auth-form__image {

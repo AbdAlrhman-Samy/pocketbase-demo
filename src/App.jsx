@@ -11,6 +11,7 @@ import { Home } from './pages/Home'
 import { ErrorPage } from './pages/ErrorPage'
 import { Login } from "./pages/Auth/Login";
 import { Signup } from "./pages/Auth/Signup";
+import { User } from './pages/User/User'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,8 +21,9 @@ const router = createBrowserRouter(
       <Route path="*" element={<ErrorPage/>} />
       <Route path="auth" element={<AuthLayout/>}>
         <Route path="login" element={<Login/>} />
-        <Route path="signup" element={<Signup />} />
+        <Route path="signup" element={<Signup/>} />
       </Route>
+      <Route path='user' element={<User/>} />
     </Route>
 
   )
