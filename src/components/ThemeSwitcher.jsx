@@ -17,7 +17,7 @@ export const ThemeSwitcher = () => {
 
 	return (
 		<button
-        className="outline theme-switcher"
+        className="contrast theme-switcher"
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
         {theme === "dark" ? <CiLight className="theme-switcher__icon" /> : <CiDark className="theme-switcher__icon"/>}

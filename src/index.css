@@ -2,6 +2,21 @@
     font-weight: bold;
 }
 
+.error {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 80vh;
+}
+
+.error__code{
+    color: red;
+    font-size: 5em;
+}
+
 .theme-switcher{
     position: fixed;
     bottom: 2em;
@@ -18,14 +33,9 @@
     font-weight: bolder;
 }
 
-.auth-form{
-    padding: 1em;
-    margin: 1em auto;
-    border-radius: 5px;
-    background-color: var(--card-background-color);
-    box-shadow: var(--card-box-shadow);
+.auth-btn{
+    margin-top: auto;
 }
-
 
 @media(min-width: 992px){
     .auth-form__image {

@@ -6,7 +6,7 @@ export const Layout = () => {
 	return (
 		<main className="container">
 			<Navbar />
-      <ThemeSwitcher/>
+			<ThemeSwitcher />
 			<div>
 				<Outlet />
 			</div>

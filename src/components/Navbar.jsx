@@ -5,7 +5,7 @@ export const Navbar = () => {
 		<nav className="navbar">
 			<ul>
 				<li>
-					<strong>Brand</strong>
+					<strong>Noklu</strong>
 				</li>
 			</ul>
 			<ul>
