@@ -13,7 +13,6 @@ export const Signup = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [userData, setUserData] = useState(null)
 	const [error, setError] = useState(null)
-	const [setOpenModal, setModalData] = useOutletContext();
 
 	const navigate = useNavigate()
 
@@ -31,16 +30,8 @@ export const Signup = () => {
 		try {
 			await pb.collection("users").create(data);
 
-			// try {
-			// 	await pb.collection('users').authWithPassword(email.current.value, pswrd.current.value);
-			// } catch (err) {
-			// 	setError(err)			
-			// 	throw new Error(err)
-			// }
-
 		} catch (err) {
 			setError(err)
-			console.log(err.data);			
 			throw new Error(err)
 		}
 

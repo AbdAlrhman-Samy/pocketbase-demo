@@ -9,7 +9,6 @@ export const Login = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [userData, setUserData] = useState(null)
 	const [error, setError] = useState(null)
-	// const [setOpenModal, setModalData] = useOutletContext();
 
 
 	const navigate = useNavigate()
