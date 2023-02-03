@@ -2,7 +2,8 @@ import {
   createBrowserRouter, 
   createRoutesFromElements,
   Route, 
-  RouterProvider
+  RouterProvider,
+  useRouteError
 } from 'react-router-dom'
 import { Layout } from './Layouts/Layout'
 import { AuthLayout } from './Layouts/AuthLayout'
@@ -16,10 +17,10 @@ import { User } from './pages/User/User'
 const router = createBrowserRouter(
   createRoutesFromElements(
 
-    <Route path='/' element={<Layout/>}> 
+    <Route path='/' element={<Layout/>} > 
       <Route index element={<Home/>} />
       <Route path="*" element={<ErrorPage/>} />
-      <Route path="auth" element={<AuthLayout/>}>
+      <Route path="auth" element={<AuthLayout/>}  >
         <Route path="login" element={<Login/>} />
         <Route path="signup" element={<Signup/>} />
       </Route>

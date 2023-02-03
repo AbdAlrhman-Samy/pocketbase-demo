@@ -3,12 +3,13 @@ import { Navbar } from "../components/Navbar";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 
 export const Layout = () => {
+
 	return (
 		<main className="container">
-			<Navbar />
+			<Navbar/>
 			<ThemeSwitcher />
 			<div>
-				<Outlet />
+				<Outlet/>
 			</div>
 		</main>
 	);
