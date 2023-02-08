@@ -10,15 +10,16 @@ export const User = () => {
 	const nav = useNavigate()
 
 	function handleLogout() {
+		console.log("Logged Out")
 		pb.authStore.clear()
 		nav("/")
 	}
 
-	if (!pb.authStore.isValid || !data) return <Navigate to={"/auth"} />;
-	if (error ) return <h1>ERROR</h1>;
-	if (isLoading) return <h1>Loading...</h1>;
+	if (isLoading) return <h1>LOADING</h1>
+	if (error) return <h1>ERROR</h1>
+	if (!pb.authStore.model) return <Navigate to="/" />
 
-	if (data) {
+	if (data && pb.authStore.model) {
 		return (
 			<div>
 				<div className="user-header grid">
