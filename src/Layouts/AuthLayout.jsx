@@ -7,7 +7,7 @@ export const AuthLayout = () => {
 	return (
 		<div className="auth-form">
 
-			<Outlet context={[setOpenModal, setModalData]} />
+			<Outlet/>
 			<hr />
 			<div className="grid">
 				<NavLink to="login">
