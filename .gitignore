@@ -11,9 +11,13 @@ node_modules
 dist
 dist-ssr
 backend
+<<<<<<< HEAD
 *.local
 
 # Editor directories and files
+=======
+backtor directories and files
+>>>>>>> auth
 .vscode/*
 !.vscode/extensions.json
 .idea
