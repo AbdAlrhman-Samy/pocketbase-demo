@@ -1,12 +1,18 @@
 import { useState } from "react";
-import { Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import { NavLink } from "react-router-dom";
 import { Modal } from "../components/Modal";
+import { pb } from "../Pocketbase.config";
 
 export const AuthLayout = () => {
 
 	const [openModal, setOpenModal] = useState(false)
 	const [modalData, setModalData] = useState("")
+
+	
+	if (pb.authStore.isValid) {
+		return <Navigate to={"/user"}/>
+	}
 
 	return (
 		<div className="auth-form">

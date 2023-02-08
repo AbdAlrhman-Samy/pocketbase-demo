@@ -1,34 +1,14 @@
-// import useSWR from 'swr'
-// import { pb } from '../Pocketbase.config';
+import useSWR from 'swr'
+import { pb } from '../Pocketbase.config';
 
-// const login = async (data) => {
+export default function useUser() {
 
-    
-//     if(data){
-//         console.log(data);
-
-//         try {
-//             return await pb.collection('users').create(data);
-//         } catch (error) {
-//             console.log(error.data);
-//             return error.data.data
-//         }
-
-//     }
-
+    async function getUser() {
+        if (pb.authStore.isValid)
+			return await pb.collection("users").getOne(pb.authStore.model?.id);
+    }
     
 
-// }
-
-// export default function useUser (credentials) {
-
-
-//     const { data, error } = useSWR(credentials, login)
-
-
-//     return {
-//         user: data,
-//         error,
-//     }
-
-// }
+    return useSWR("users", getUser)
+    
+}

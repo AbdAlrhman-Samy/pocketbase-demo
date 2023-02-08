@@ -1,96 +1,74 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import useLogin from "../../hooks/useLogin";
+
+import { Navigate } from "react-router-dom";
+import { ErrorList } from "./ErrorList";
 import { FaUserAstronaut } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { pb } from "../../Pocketbase.config";
 
 export const Login = () => {
-	const email = useRef()
-	const pswrd = useRef()
-	const [isLoading, setIsLoading] = useState(false);
-	const [userData, setUserData] = useState(null)
-	const [error, setError] = useState(null)
+	const email = useRef();
+	const pswrd = useRef();
+
+	const { trigger: login, error, isMutating } = useLogin();
 
 
-	const navigate = useNavigate()
-
-
-	const handleSignupForm = async (e) => {
+	async function signin(e) {
 		e.preventDefault();
-		
-		try {
-			await pb.collection('users').authWithPassword(email.current.value, pswrd.current.value);
-		} catch (err) {
-			setError(err)	
-			console.log(err.data);		
-			throw new Error(err)
-		}
-		
 
-	};
+		const creds = {
+			email: email.current.value,
+			password: pswrd.current.value,
+		};
 
-	function signin(e) {
-		setIsLoading(true);
-		
-		handleSignupForm(e)
-			.then((data) => {
-				setUserData(data)
-				setIsLoading(false);
-				setError(null)
-				navigate("/user")
-
-			})
-			.catch((err) => {
-				setIsLoading(false);
-			});
-
+		await login(creds);
 	}
 
-
-	useEffect(() => {
-		if(userData){
-			console.log('working');
-		  	navigate("/user")
-		}
-	  
-	  }, [userData])
-
-
+	if (pb.authStore.isValid) {
+		return <Navigate to={"/user"}/>
+	}
 
 	return (
 		<article>
 			<header>
 				<hgroup>
-					<h1> <FaUserAstronaut/> Login</h1>
+					<h1>
+						{" "}
+						<FaUserAstronaut /> Login
+					</h1>
 					<p>Glad To Have You Back!</p>
 				</hgroup>
-				{error && (
-						<ul>
-							
-							{Object.keys(error.data.data).map((key) => {
-								return (
-									<li key={key}>
-										<b>{key.toUpperCase()}</b>:{" "}
-										{String(error.data.data[key].message)}
-									</li>
-								);
-							})}
-						</ul>
-					)}
+				{error && <ErrorList error={error} />}
 			</header>
 
 			<div className="grid">
 				<form className="container" onSubmit={signin}>
 					<label htmlFor="email">
 						Email
-						<input type="email" name="email" id="email" ref={email} />
+						<input
+							type="email"
+							name="email"
+							id="email"
+							ref={email}
+						/>
 					</label>
 
 					<label htmlFor="password">
 						Password
-						<input type="password" name="password" id="password" ref={pswrd} />
+						<input
+							type="password"
+							name="password"
+							id="password"
+							ref={pswrd}
+						/>
 					</label>
 
-					<button type="submit" className="auth-btn" aria-busy={isLoading}>Log in</button>
+					<button
+						type="submit"
+						className="auth-btn"
+						aria-busy={isMutating}>
+						Log in
+					</button>
 				</form>
 				<img
 					src="https://picsum.photos/500"

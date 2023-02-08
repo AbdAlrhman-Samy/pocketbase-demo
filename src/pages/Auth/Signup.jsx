@@ -1,66 +1,37 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { FaUserAstronaut } from "react-icons/fa";
-import { Navigate, redirect, useNavigate, useOutletContext, useRouteError } from "react-router-dom";
-import { Modal } from "../../components/Modal";
-
+import { Navigate } from "react-router-dom";
+import useSignup from "../../hooks/useSignup";
 import { pb } from "../../Pocketbase.config";
 
+import { ErrorList } from "./ErrorList";
+
 export const Signup = () => {
-	const username = useRef()
-	const email = useRef()
-	const pswrd = useRef()
-	const repswrd = useRef()
-	const [isLoading, setIsLoading] = useState(false);
-	const [userData, setUserData] = useState(null)
-	const [error, setError] = useState(null)
+	const username = useRef();
+	const email = useRef();
+	const pswrd = useRef();
+	const repswrd = useRef();
 
-	const navigate = useNavigate()
+	const { trigger: signup, data, error, isMutating } = useSignup();
 
-	const handleSignupForm = async (e) => {
+	async function handleSignup(e) {
 		e.preventDefault();
-		const data = {
-			name: username.current.value,
-			username: username.current.value,
+
+		const creds = {
 			email: email.current.value,
 			password: pswrd.current.value,
 			passwordConfirm: repswrd.current.value,
+			username: username.current.value,
 			avatarURL: `https://api.dicebear.com/5.x/thumbs/svg?seed=${username.current.value}`,
 		};
 
-		try {
-			await pb.collection("users").create(data);
-
-		} catch (err) {
-			setError(err)
-			throw new Error(err)
-		}
-
-	};
-
-	function signup(e) {
-		setIsLoading(true);
-		
-		handleSignupForm(e)
-			.then((data) => {
-				setUserData(data)
-				setIsLoading(false);
-				setError(null)
-				navigate("/auth/login")
-			})
-			.catch((err) => {
-				setIsLoading(false);
-			});
-
+		await signup(creds);
 	}
 
-
-	useEffect(() => {
-	  if(userData){
-		console.log('working');
-	  } else console.log('none');
-	
-	}, [userData])
-	
+	if (data && !isMutating) {
+		return <Navigate to={"/auth/login"} />;
+	}
+	if (pb.authStore.isValid) return <Navigate to={"/user"} />;
 
 	return (
 		<>
@@ -72,24 +43,11 @@ export const Signup = () => {
 						</h1>
 						<p>Welcome to whatever this is!</p>
 					</hgroup>
-
-					{error && (
-						<ul>
-							
-							{Object.keys(error.data.data).map((key) => {
-								return (
-									<li key={key}>
-										<b>{key.toUpperCase()}</b>:{" "}
-										{String(error.data.data[key].message)}
-									</li>
-								);
-							})}
-						</ul>
-					)}
+					{error && <ErrorList error={error} />}
 				</header>
 
 				<div className="grid">
-					<form className="container" onSubmit={signup}>
+					<form className="container" onSubmit={handleSignup}>
 						<label htmlFor="username">
 							Username
 							<input
@@ -135,11 +93,11 @@ export const Signup = () => {
 						<button
 							type="submit"
 							className="auth-btn"
-							aria-busy={isLoading}
-							disabled={isLoading}>
+							aria-busy={isMutating}>
 							Create My Account
 						</button>
 					</form>
+
 					<img
 						src="https://picsum.photos/500"
 						className="auth-form__image"
