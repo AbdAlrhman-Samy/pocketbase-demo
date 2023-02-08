@@ -14,7 +14,7 @@ export const User = () => {
 		nav("/")
 	}
 
-	if (!pb.authStore.isValid) return <Navigate to={"/auth"} />;
+	if (!pb.authStore.isValid || !data) return <Navigate to={"/auth"} />;
 	if (error ) return <h1>ERROR</h1>;
 	if (isLoading) return <h1>Loading...</h1>;
 
